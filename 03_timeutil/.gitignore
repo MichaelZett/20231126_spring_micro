@@ -1,0 +1,6 @@
+.gradle/
+.idea/*
+!.idea/compiler.xml
+*.iml
+build/
+out/

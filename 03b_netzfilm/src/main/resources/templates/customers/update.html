@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+
+<head>
+    <title>Passe Kunden an</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h2>Kunden aktualisieren:</h2>
+    <div>
+        <form action="#" th:action="@{/updatecustomer/{uuid}(uuid=${customer.uuid})}" th:object="${customer}"
+              method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" th:field="*{name}" id="name" placeholder="Name">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nachname</label>
+                <input type="text" th:field="*{lastName}" id="lastName" placeholder="Nachname">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Geburtsdatum</label>
+                <input type="date" th:field="*{birthdate}" id="birthdate" placeholder="Geburtsdatum">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></p>
+            </div>
+            <div class="form-group">
+                <label for="vip">VIP</label>
+                <input type="checkbox" id="vip" th:checked="*{vip}" th:field="*{vip}"/>
+            </div>
+            <input type="hidden" th:field="*{version}" id="version">
+            <input type="submit" value="Passe Customer an">
+        </form>
+    </div>
+    <div class="messages">
+        <p style="color: green;" th:if="${message}" th:text="${message}"></p>
+    </div>
+    <div class="link"><a href="/">Home</a></div>
+</div>
+</body>
+</html>

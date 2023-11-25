@@ -1,0 +1,67 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Unsere Kunden</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h2>Unsere Kunden:</h2>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th> Name</th>
+                <th> Nachname</th>
+                <th> Geburtsdatum</th>
+                <th> VIP</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if="${customers.empty}">
+                <td colspan="2"> Keine Kunden!</td>
+            </tr>
+            <tr th:each="customer : ${customers}">
+                <td><span th:text="${customer.name}"> </span></td>
+                <td><span th:text="${customer.lastName}"> </span></td>
+                <td><span th:text="${#temporals.format(customer.birthdate,'dd-MM-yyyy')}"> </span></td>
+                <td><span th:text="${customer.vip}"> </span></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="messages">
+        <p style="color: green;" th:if="${message}" th:text="${message}"></p>
+    </div>
+
+    <div>
+        <form action="#" th:action="@{/addcustomer}" th:object="${customer}" method="post">
+            <div class="form-group">
+                <label for="name">Name</label>
+                <input type="text" th:field="*{name}" id="name" placeholder="Name">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p>
+            </div>
+            <div class="form-group">
+                <label for="lastName">Nachname</label>
+                <input type="text" th:field="*{lastName}" id="lastName" placeholder="Nachname">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"></p>
+            </div>
+            <div class="form-group">
+                <label for="birthdate">Geburtsdatum</label>
+                <input type="date" th:field="*{birthdate}" id="birthdate" placeholder="Geburtsdatum">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('birthdate')}" th:errors="*{birthdate}"></p>
+            </div>
+            <div class="form-group">
+                <label for="vip">VIP</label>
+                <input type="checkbox" id="vip" th:checked="*{vip}" th:field="*{vip}"/>
+            </div>
+
+            <input type="submit" value="Füge Customer hinzu">
+        </form>
+    </div>
+
+    <div class="link"><a href="/">Home</a></div>
+</div>
+</body>

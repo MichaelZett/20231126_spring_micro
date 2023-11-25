@@ -1,0 +1,34 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Unsere Kunden</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<h2>Unsere Kunden:</h2>
+<table>
+    <thead>
+    <tr>
+        <th> Name</th>
+        <th> Nachname</th>
+        <th> Geburtsdatum</th>
+        <th> VIP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${customers.empty}">
+        <td colspan="2"> Keine Kunden!</td>
+    </tr>
+    <tr th:each="customer : ${customers}">
+        <td><span th:text="${customer.name}"> </span></td>
+        <td><span th:text="${customer.lastName}"> </span></td>
+        <td><span th:text="${#temporals.format(customer.birthdate,'dd-MM-yyyy')}"> </span></td>
+        <td><span th:text="${customer.vip}"> </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="link"><a href="/">Home</a></div>
+</body>
+</html>
