@@ -1,0 +1,99 @@
+server:
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+  compression:
+    enabled: true
+    mime-types: application/json
+  shutdown: graceful
+
+spring:
+  application:
+    name: Netzfilm
+    server:
+      multipart:
+        max-file-size: 2MB
+        max-request-size: 2MB
+  profiles:
+    default: dev
+  jackson:
+    time-zone: UTC
+    default-property-inclusion: non_null
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    generator:
+      WRITE_BIGDECIMAL_AS_PLAIN: true
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/netzfilm'
+    username: postgres
+    password: postgres
+    hikari:
+      # https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
+      # in combination with jpa.properties.hibernate.connection.provider_disables_autocommit: true
+      auto-commit: false
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          provider_disables_autocommit: true
+        jdbc:
+          time_zone: UTC
+    generate-ddl: true
+    # per default
+    hibernate:
+      ddl-auto: create-drop #none, validate, update,
+    defer-datasource-initialization: true #so that hibernate can work before
+    open-in-view: false
+  sql:
+    init:
+      mode: always # default with h2
+  boot:
+    admin:
+      client:
+        url: http://localhost:8080
+        instance:
+          prefer-ip: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    custom:
+      enabled: true
+  info:
+    time:
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+
+#springdoc:
+#  show-actuator: false

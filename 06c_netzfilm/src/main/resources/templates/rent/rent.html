@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Eine Leihe tätigen</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link th:href="@{/styles/styles.css}" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <h2>Filme leihen:</h2>
+
+    <div class="messages">
+        <p style="color: green;" th:if="${message}" th:text="${message}"></p>
+    </div>
+
+    <div>
+        <form action="#" th:action="@{/addrent}" th:object="${rent}" method="post">
+            <div class="form-group">
+                <label for="copyuuid">Wähle einen Film:</label>
+                <select id="copyuuid" name="copyuuid" th:field="*{copyUuid}">
+                    <option th:each="copy : ${copies}" th:value="${copy.uuid}" th:utext="${copy.title}"/>
+                </select>
+                <p th:errorclass="error" th:if="${#fields.hasErrors('copyUuid')}" th:errors="*{copyUuid}"></p>
+            </div>
+            <div class="form-group">
+                <label for="startDate">Startdatum</label>
+                <input type="date" th:field="*{startDate}" id="startDate" placeholder="Startdatum">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('startDate')}" th:errors="*{startDate}"></p>
+            </div>
+            <div class="form-group">
+                <label for="numberOfDays">Anzahl Tage</label>
+                <input type="text" th:field="*{numberOfDays}" id="numberOfDays" placeholder="Anzahl Tage">
+                <p th:errorclass="error" th:if="${#fields.hasErrors('numberOfDays')}" th:errors="*{numberOfDays}"></p>
+            </div>
+            <div class="form-group">
+                <label for="customeruuid">Wähle einen Kunden:</label>
+                <select id="customeruuid" name="customeruuid" th:field="*{customerUuid}">
+                    <option th:each="customer : ${customers}" th:value="${customer.uuid}"
+                            th:utext="${customer.name} + ' ' + ${customer.lastName}"/>
+                </select>
+                <p th:errorclass="error" th:if="${#fields.hasErrors('customerUuid')}" th:errors="*{customerUuid}"></p>
+            </div>
+            <button class="btn btn-primary" type="submit">Leihen</button>
+        </form>
+    </div>
+
+    <div class="link"><a href="/">Home</a></div>
+</div>
+</body>
+</html>
