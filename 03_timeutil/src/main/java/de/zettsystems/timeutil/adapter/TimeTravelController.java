@@ -13,7 +13,7 @@ import java.time.Instant;
 public class TimeTravelController {
 
     @PostMapping("freeze")
-    public void travelTo(@RequestParam Instant timestamp) {
+    public void travelTo(@RequestParam(value="timestamp") Instant timestamp) {
         TimeMachine.freeze(timestamp);
     }
 
