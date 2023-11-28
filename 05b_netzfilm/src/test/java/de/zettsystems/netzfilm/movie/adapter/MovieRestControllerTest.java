@@ -1,5 +1,6 @@
 package de.zettsystems.netzfilm.movie.adapter;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.zettsystems.netzfilm.movie.application.MovieService;
 import de.zettsystems.netzfilm.movie.values.Fsk;
 import de.zettsystems.netzfilm.movie.values.MovieCreationTo;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
@@ -32,9 +34,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(controllers = MovieRestController.class)
@@ -44,6 +44,8 @@ class MovieRestControllerTest {
 
     @MockBean
     MovieService movieService;
+    @Autowired
+    ObjectMapper objectMapper;
     UUID uuid;
 
     @BeforeEach
@@ -92,6 +94,11 @@ class MovieRestControllerTest {
                   "fsk": "%s",\
                   "version": "%s"\
                 }""".formatted(uuid.toString(), "Bernd", LocalDate.of(2023, 6, 1).toString(), "FSK_12", 13);
+
+        // Alternative zu json selber schreiben
+//        MovieTo bernd1 = new MovieTo(uuid, "Bernd", LocalDate.of(2023, 6, 1), Fsk.FSK_12, 13);
+//        String bernd = objectMapper.writeValueAsString(bernd1);
+
         RequestBuilder request = MockMvcRequestBuilders
                 .put("/api/movies/" + uuid.toString())
                 .accept("*/*")

@@ -70,7 +70,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                                                       HttpStatusCode httpStatus,
                                                       WebRequest request) {
         // Den Stacktrace sollten wir natürlich nicht beliebig nach draußen reichen, hier zu Demo-Zwecken
-        final String stackTrace = "TRUE".equalsIgnoreCase(propertyResolver.getProperty("", "FALSE")) ? ExceptionUtils.getStackTrace(exception) : null;
+        final String stackTrace = "TRUE".equalsIgnoreCase(propertyResolver.getProperty("error.stacktrace.enable", "FALSE")) ? ExceptionUtils.getStackTrace(exception) : null;
         ExceptionResponseData errorResponse = new ExceptionResponseData(UUID.randomUUID(), httpStatus.value(), message, stackTrace, null);
         LOG.error("Some error occurred: {}", errorResponse);
 

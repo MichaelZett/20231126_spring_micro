@@ -24,5 +24,4 @@ public class MonetaryAmountDeserializer extends JsonDeserializer<MonetaryAmount>
         return FastMoney.of(amount, Monetary.getCurrency(currency));
     }
 
-
 }
