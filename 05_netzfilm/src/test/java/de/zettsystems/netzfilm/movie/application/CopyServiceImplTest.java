@@ -1,4 +1,4 @@
-package netzfilm.movie.application;
+package de.zettsystems.netzfilm.movie.application;
 
 import de.zettsystems.netzfilm.movie.application.CopyServiceImpl;
 import de.zettsystems.netzfilm.movie.domain.Copy;

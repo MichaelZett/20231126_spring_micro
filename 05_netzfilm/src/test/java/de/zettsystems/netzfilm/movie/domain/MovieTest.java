@@ -1,4 +1,4 @@
-package netzfilm.movie.domain;
+package de.zettsystems.netzfilm.movie.domain;
 
 import de.zettsystems.netzfilm.movie.domain.Movie;
 import de.zettsystems.netzfilm.movie.values.Fsk;
@@ -31,6 +31,7 @@ class MovieTest {
     void shouldUpdate() {
         final LocalDate newReleaseDate = LocalDate.of(2003, 9, 8);
         final Fsk newFsk = Fsk.FSK_0;
+
         testee.update(new MovieTo(testee.getUuid(), testee.getTitle(), newReleaseDate, newFsk, 0));
 
         assertThat(testee.getReleaseDate()).isEqualTo(newReleaseDate);

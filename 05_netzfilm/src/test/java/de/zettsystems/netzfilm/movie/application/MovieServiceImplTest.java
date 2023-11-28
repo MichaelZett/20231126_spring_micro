@@ -1,4 +1,4 @@
-package netzfilm.movie.application;
+package de.zettsystems.netzfilm.movie.application;
 
 import de.zettsystems.netzfilm.movie.application.MovieServiceImpl;
 import de.zettsystems.netzfilm.movie.domain.Movie;

@@ -1,4 +1,4 @@
-package netzfilm.movie.domain;
+package de.zettsystems.netzfilm.movie.domain;
 
 import de.zettsystems.netzfilm.movie.domain.Copy;
 import de.zettsystems.netzfilm.movie.domain.Movie;
@@ -6,6 +6,7 @@ import de.zettsystems.netzfilm.movie.values.CopyTo;
 import de.zettsystems.netzfilm.movie.values.CopyType;
 import de.zettsystems.netzfilm.movie.values.Fsk;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -22,6 +23,7 @@ class CopyTest {
         testee = new Copy(CopyType.VHS, movie);
     }
 
+    @DisplayName("Die Kopie soll ausgeliehen sein nach dem Leihen")
     @Test
     void shouldLend() {
         assertThat(testee.isLent()).isFalse();
