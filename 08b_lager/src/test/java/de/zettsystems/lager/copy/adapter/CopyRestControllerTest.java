@@ -54,16 +54,18 @@ class CopyRestControllerTest {
 
     @Test
     void addWithRetry() {
-        NETFILM.stubFor(WireMock.post("/api/copies")
-                .willReturn(ok()));
+        NETFILM.stubFor(WireMock.post("/api/copies").willReturn(ok()));
+
         ResponseEntity<String> response1 = restTemplate.postForEntity("/api/copies/retry", copyTo, String.class);
+
         NETFILM.verify(1, postRequestedFor(urlEqualTo("/api/copies")));
 
         NETFILM.resetRequests();
 
-        NETFILM.stubFor(WireMock.post("/api/copies")
-                .willReturn(serverError()));
+        NETFILM.stubFor(WireMock.post("/api/copies").willReturn(serverError()));
+
         ResponseEntity<String> response2 = restTemplate.postForEntity("/api/copies/retry", copyTo, String.class);
+
         assertThat(response2.getBody()).isEqualTo("Fehler bei Netzfilm.");
         NETFILM.verify(3, postRequestedFor(urlEqualTo("/api/copies")));
     }
@@ -71,6 +73,7 @@ class CopyRestControllerTest {
     @Test
     void addWithTime() {
         NETFILM.stubFor(WireMock.post("/api/copies/out").willReturn(ok()));
+
         ResponseEntity<String> response = restTemplate.postForEntity("/api/copies/time", copyTo, String.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.REQUEST_TIMEOUT);
@@ -101,6 +104,7 @@ class CopyRestControllerTest {
     @Test
     void addWithBulk() throws InterruptedException {
         NETFILM.stubFor(WireMock.post("/api/copies").willReturn(ok()));
+
         Map<Integer, Integer> responseStatusCount = new ConcurrentHashMap<>();
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         CountDownLatch latch = new CountDownLatch(5);

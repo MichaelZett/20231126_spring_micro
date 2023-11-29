@@ -10,8 +10,8 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-@Endpoint(id = "features")
-public class FeaturesEndpoint {
+@Endpoint(id = "featureToggle")
+public class FeatureToggleEndpoint {
 
     private Map<String, Feature> features = new ConcurrentHashMap<>();
 

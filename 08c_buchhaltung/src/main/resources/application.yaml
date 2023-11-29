@@ -19,10 +19,12 @@ spring:
     generator:
       WRITE_BIGDECIMAL_AS_PLAIN: true
   
-  eureka:
-    client:
-      serviceUrl:
-        defaultZone: http://localhost:8080/eureka/
+eureka:
+  instance:
+    preferIpAddress: true
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
 
 management:
   endpoints:

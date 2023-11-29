@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class BillingServiceImpl implements BillingService {
@@ -13,6 +15,7 @@ public class BillingServiceImpl implements BillingService {
 
     @Override
     public void sendBill(Rent rent) {
-        amqpTemplate.convertAndSend(new RentBillingTo(rent.getAmount(), rent.getUuid(), rent.getCustomer().getUuid()));
+        amqpTemplate.convertAndSend(
+                new RentBillingTo(new BigDecimal(rent.getAmount().getNumber().toString()), rent.getUuid(), rent.getCustomer().getUuid()));
     }
 }
