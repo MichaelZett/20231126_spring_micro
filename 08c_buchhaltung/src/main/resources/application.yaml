@@ -1,0 +1,67 @@
+server:
+  port: 9010
+  compression:
+    enabled: true
+    mime-types: application/json
+  shutdown: graceful
+
+spring:
+  application:
+    name: Bookkeeping
+  jackson:
+    time-zone: UTC
+    default-property-inclusion: non_null
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    generator:
+      WRITE_BIGDECIMAL_AS_PLAIN: true
+  
+  eureka:
+    client:
+      serviceUrl:
+        defaultZone: http://localhost:8080/eureka/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+      mode: full
+
+queue:
+  name:
+    billing: q.billing
+    billing-debug: q.billing-debug
+
+exchange:
+  name:
+    billing: x.billing

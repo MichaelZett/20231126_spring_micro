@@ -1,0 +1,30 @@
+spring:
+  cloud:
+    config:
+      enabled: false
+    discovery:
+      enabled: false
+  datasource:
+    url: 'jdbc:postgresql://localhost:5432/netzfilm'
+    username: postgres
+    password: postgres
+    hikari:
+      # https://vladmihalcea.com/why-you-should-always-use-hibernate-connection-provider_disables_autocommit-for-resource-local-jpa-transactions/
+      # in combination with jpa.properties.hibernate.connection.provider_disables_autocommit: true
+      auto-commit: false
+  jpa:
+    properties:
+      hibernate:
+        connection:
+          provider_disables_autocommit: true
+        jdbc:
+          time_zone: UTC
+    generate-ddl: true
+    # per default
+    hibernate:
+      ddl-auto: create-drop #none, validate, update,
+    defer-datasource-initialization: true #so that hibernate can work before
+    open-in-view: false
+  sql:
+    init:
+      mode: always # default with h2

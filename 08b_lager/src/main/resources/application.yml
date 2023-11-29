@@ -1,0 +1,109 @@
+server:
+  port: 9999
+  compression:
+    enabled: true
+    mime-types: application/json
+  shutdown: graceful
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8080/eureka/
+
+spring:
+  application:
+    name: lager
+  jackson:
+    time-zone: UTC
+    default-property-inclusion: non_null
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      FAIL_ON_UNKNOWN_PROPERTIES: false
+    generator:
+      WRITE_BIGDECIMAL_AS_PLAIN: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    custom:
+      enabled: true
+    circuitbreakers:
+      enabled: true
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        registerHealthIndicator: true
+        automatic-transition-from-open-to-half-open-enabled: true
+        failureRateThreshold: 50
+        minimum-number-of-calls: 5
+        waitDurationInOpenState: 5s
+        permitted-number-of-calls-in-half-open-state: 3
+        sliding-window-size: 10
+        sliding-window-type: count_based
+        recordExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.client.HttpClientErrorException$NotFound
+          - java.util.concurrent.TimeoutException
+          - java.io.IOException
+    instances:
+      netzfilm:
+        baseConfig: default
+
+  retry:
+    configs:
+      default:
+        maxAttempts: 3
+        waitDuration: 100
+        retryExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - org.springframework.web.client.HttpClientErrorException$NotFound
+          - java.util.concurrent.TimeoutException
+          - java.io.IOException
+    instances:
+      netzfilm:
+        baseConfig: default
+
+  timelimiter:
+    instances:
+      netzfilm:
+        timeoutDuration: 2s
+
+  bulkhead:
+    instances:
+      netzfilm:
+        maxConcurrentCalls: 3
+        maxWaitDuration: 1
+        metrics:
+          enabled: true

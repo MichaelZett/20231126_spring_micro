@@ -1,0 +1,54 @@
+server:
+  port: 8080
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    register-with-eureka: false
+    serviceUrl:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka/
+  server:
+    waitTimeInMsWhenSyncEmpty: 0
+    response-cache-update-interval-ms: 5000
+    renewalPercentThreshold: 0.49
+spring:
+  application:
+    name: spring-discovery-admin
+  boot:
+    admin:
+      client:
+        prefer-ip: true
+      context-path: /admin
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+      probes:
+        enabled: true
+    env:
+      show-values: always
+    configprops:
+      show-values: always
+  health:
+    livenessstate:
+      enabled: true
+    readinessstate:
+      enabled: true
+    custom:
+      enabled: true
+  info:
+    java:
+      enabled: true
+    os:
+      enabled: true
+    env:
+      enabled: true
+    build:
+      enabled: true
+    git:
+      enabled: true
