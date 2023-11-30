@@ -11,7 +11,7 @@ import io.swagger.v3.oas.annotations.info.License;
                 version = "0.0.1",
                 description = "The API description",
                 license = @License(name = "GNU GPL 3.0", url = "https://www.gnu.org/licenses/gpl-3.0.html"),
-                contact = @Contact(url = "https://github.com/MichaelZett", name = "Michael", email = "michael2.zoeller@gmail.com")
+                contact = @Contact(url = "https://github.com/MichaelZett", name = "Michael Zöller", email = "michael2.zoeller@gmail.com")
         )
 )
 public class SwaggerConfig {
